@@ -66,3 +66,29 @@ Outline:
       - RNN movie, LTSM written by Benjamin - https://www.youtube.com/watch?v=LY7x2Ihqjmc (9 Minutes)
       - https://arstechnica.com/gaming/2016/06/an-ai-wrote-this-movie-and-its-strangely-moving/
       - Construct sentences for the most parts, lacks a bigger picture, seperate sentences (90% makes sense) but linking sentences together
+
+- Vanishing Gradient Problem
+  - Cost Function, Gradient Descent C = 1/2 (y^ - y)^2
+  - Win, Wrec, Wout
+  - RNN's Node is a representation of a whole layer
+  - Cost function compares what you should be getting
+  - Wrec = weight recurring, multiplying the weights multiple time
+  - Problem arises: multiplying small, it gets smaller, weights assigned close to zero; if Wrec starts close to zero, gradient becomes even less
+  - Vanishing gradident is bad the lower the gradient the harder the network can update the weights
+  - The lower the gradient is slower, the higher the gradient the faster it can update the weights
+  - viscious cycle, training is slow, training on the disbalance, the whole network is not being trained correctly because of the weights. Domino effect
+  - Wrec ~ small => Vanishing
+  - Wrec ~ large => Exploding
+  - Solutions:
+    1. Exploding Gradient
+      - Truncated Backpropagation
+      - Penalties 
+      - Gradient Clipping (maximum value)
+    2. Vanishing Gradient
+      - Weight initialization 
+      - Echo State Networks
+      - Long Short-Term Memory Networks (LSTMs)
+  - Additional Reading:
+    - Sepp (Josef) Hochreiter, 1991, Untersuchungen zu dynamischen neuronalen Netzen
+    - Yoshua Bengio, 1994, Learning Long-Term Dependencies with Gradient Descent is Difficult
+    - Recommend: Razvan Pascanu, 2013, On the difficulty of training recurrent neural networks - http://proceedings.mlr.press/v28/pascanu13.pdf
