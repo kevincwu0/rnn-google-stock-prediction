@@ -128,4 +128,4 @@ Outline:
       - Christopher Olah, 2015, Understanding LSTM Networks
       - Shi Yan, 2016, Understanding LSTM and its diagrams
 - How LSTM works in practical application
-  - LSTM function, tangent function and fires up
+  - LSTM function, tangent function, and then fires up
