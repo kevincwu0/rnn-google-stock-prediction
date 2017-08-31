@@ -129,3 +129,17 @@ Outline:
       - Shi Yan, 2016, Understanding LSTM and its diagrams
 - How LSTM works in practical application
   - LSTM function, tangent function, and then fires up
+  - How LSTM works in practical application
+  - First look at tanh function and how it fires up
+    - minus 1 red, +1 is blue according to article
+    - Predict text what is coming, War and Peace - Tolstoy
+    - Activated for URLs
+    - Andrej Karpathy, 2015, The Unreasonable Effectiveness of Recurrent Neural Networks - https://karpathy.github.io/2015/05/21/rnn-effectiveness/
+    - Andrej Karpathy, 2015, Visualizing and Understanding Recurrent Networks - completely tink on its own, seperate being, mysterious something magical, decade think completely on its own.
+- Variations of LSTMs
+  - Standard LSTMs 
+  - Variation #1 add peepholes
+    - connecting sigmoid of the neural network, current state of the memory cell, allow decision about the valves and what's sitting
+  - Variation #2 Connect forget valve and memory valve, combined decision
+  - Variation #3 Gated Recurrent Units (GRUs) => remove memory pipeline - simplifies things
+  - Klaus Greff, 2015, LSTM: A Search Space Odyssey - https://arxiv.org/pdf/1503.04069.pdf
