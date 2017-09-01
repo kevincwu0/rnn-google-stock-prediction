@@ -26,3 +26,7 @@ sc = MinMaxScaler() # default is 0,1
 # Fitting to training_set, scale training set, 
 # transform we'll apply normalizationjust need min and max for normalization
 training_set = sc.fit_transform(training_set)
+
+# Getting the inputs and the outputs, y_train is output, x_train is the input
+X_train = training_set[0:1257]
+y_train = training_set[1:1258]
