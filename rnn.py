@@ -18,3 +18,11 @@ training_set = pd.read_csv("Google_Stock_Price_Train.csv")
 # create a set only with the "Open" Google stock price, extract that column
 # two-dimensional numpy array
 training_set = training_set.iloc[:,1:2].values
+
+# Feature Scaling + Normalization, since LSTM Several Sigmoid Activation function
+# Sigmoid 0 and 1, as is the case in Normalization
+from sklearn.preprocessing import MinMaxScaler
+sc = MinMaxScaler() # default is 0,1
+# Fitting to training_set, scale training set, 
+# transform we'll apply normalizationjust need min and max for normalization
+training_set = sc.fit_transform(training_set)
