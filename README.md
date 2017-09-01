@@ -143,3 +143,91 @@ Outline:
   - Variation #2 Connect forget valve and memory valve, combined decision
   - Variation #3 Gated Recurrent Units (GRUs) => remove memory pipeline - simplifies things
   - Klaus Greff, 2015, LSTM: A Search Space Odyssey - https://arxiv.org/pdf/1503.04069.pdf
+
+- The Unreasonable Effectiveness of Recurrent Neural Networks
+  - Image captioning - generate very nice looking description of images that on the edge of amking sense
+  - Common wisdom is that RNNs were supposed to be difficult to train
+  - Magical outputs, witnessed their power and robustness many times, still amuses 
+  - Character-level language models based on multi-layer LSTMs
+  - What are Recurrent Neural Networks?
+    - Limitation of Vanilla Neural Networks (Convolution Networks) - API too constrained - accepted a fixed-sized vector as input (e.g.) an image and produce a fixed-sized vector as output (probabilities of different classes) and uses a fixed amount of computational steps (number of layers in the model)
+    - Recurrent Nets are more exciting allow us to operate over "sequences" of vectors: sequences in the input, output, or in the most general case both. 
+      - One-to-One (Input Vector -> matrix multiply -> Output Vector) - Vanilla mode of processing without RNN, from fixed-sized input to fixed-size output (e.g. image classification)
+      - One-to-Many (Sequence output) - e.g. image captioning takes an image and ouputs a sentnece of words
+      - Many-to-One (Sequence input) e.g. sentimenet anaylsis where a given sentence is classified as expressing positive or negative sentiment
+      - Many-to-Many (Sequence input and sequence output) e.g. Machine Translation: an RNN reads a sentence in English and then outputs a sentence in French
+      - Many-to-Many - Synced sequence input and output e.g. video classification where we wish to label each frame of the video
+  - RNNs combine the input vector and their state vector with a fixed (but learned) function to produce a new state vector.
+  - RNNS are Turing-Complete in the sense that they can be used to simulate arbitraty programs (with proper weights) - but similar to universal approximation theorms, neural nets - don't look too much into this.
+  - If you data is not in form of sequences, you can still formulate and train powerful models that learn to process it sequentially.
+  - RNN Computation
+    - How do these things work? 
+    - At the core, RNNs have a deceptively simple API -> accept an input vector x and gives you an output vector y
+    - Output vectors contents are influenced not only by the input just fed in, but also on the entire history of inputs you've fed in the past.
+    - `rnn = RNN()`
+    - `y = rnn.step(x) # x is an input vector, y is the RNN's output vector`
+    - RNNs are neural networks and everything works monotonically better (if done right) if you put on your deep learning hat and start stacking models up like pancakes. For instance, we can form a 2-layer recurrent network as follows:
+      - `y1 = rnn1.step(x)`
+      - `y = rnn2.step(y1)`  
+  - LSTMs
+    - Long Short-Term Memory (LSTM) network. The LSTM is a particular type of recurrent network that works slightly better in practice, owing to its more powerful update equation and some appealing backpropagation dynamics
+      - I won’t go into details, but everything I’ve said about RNNs stays exactly the same, except the mathematical form for computing the update (the line self.h = ... ) gets a little more complicated. From here on I will use the terms “RNN/LSTM” interchangeably but all experiments in this post use an LSTM.
+ - Summary of RNN and LSTMs
+  - 1. History
+    - AI has been around and in the background for decades. In 2017 AI has broken through and arrived in a big way.
+    - Why though? What's the big deal all of a sudden? What do Reccurent Neural Networks have to with it? Well, a lot, actually
+    - Thanks to an ingeious form of short-term memory that is unheard of in conventional neural networks, RNNs have been proving themselves as powerful predictive engines.
+    - When it comes to sequential machine learning tasks, such as speech recognition, RNNs are reaching levels of predictive accurarcy, time and time again, that no other algorithm can match.
+    - First RNNs were no hot suffering from a serious setback in their error-tweaking process that held up their progress for decades
+    - A major breathrough in the 90s led to a new generation of far more accurate RNNs - Google Voice Search, Siri, igniting the AI renaissance that's unfoleding now
+   - 2. Neural Networks that Cling to the Past
+      - Most ANN such as feedforward neural networks, have no memory of the input they received just a moment ago.
+      - E.g. if you provide a feedforward neural network with the sequence of letters "WISDOM" when it gets to "D" it has already forgotten "S" => Which is a big problem, as no matter how hard you train it, it will always struggle to guess the most likely next character 
+      - Horrible for speech recognition which greatly benefit from the capacity to predict what's coming next
+      - Recurrent Neural Networks, on the other hand, do remember what they've just encountered, and at a remarkably sophisticated level
+   - 3. Applying "WISDOM" to Recurrent Neural Networks (RNNs)
+      - The unit, or artificial neuron, of the RNN, upon receiving the "D" also takes as its input the character it received one moment ago, the "S"
+      - In other words, it adds the immediate past to the present.
+      - This gives it the advantage of limited short-term memory that, along with its training, provides enough context for guessing what the next character is most likely to be: "O"
+   - 4. Tweaking and Re-Tweaking
+      - Like all ANN, units of an RNN assign a matrix of weights to their multiple inputs, then apply a function to those weights to determine a single output.
+      - However, recurrent neural networks apply weights not only to their present inputs, but also to their inputs from moments ago.
+      - Then adjust the weights assigned to their present and past inputs through a process that involves two concepts you'll definitely want to know if you want to get into AI:
+        - Gradient Descent
+        - Backpropagation through time (BPTT)
+   - 5. Gradient Descent
+      - Gradient Descent is one of the most famous algorithm in Machine Learning
+      - Its priamry virtue is its remarkable capacity to sidestep the dreaded "curse of dimensionality" 
+      - Issue plagues systems such as neural networks, with far too many variables to make a brute-force calculation
+      - Gradient descent breaks the curse of dimensionaility by zooming in on the local low-point or local minimum of the multi-dimensional error or cost function
+      - This helps the system determine the tweaked value, or weight, to assign to each units in the network, bringing accuracy back in line.
+   - 6. Backpropogation Through Time
+      - RNN trains its units by adjusting their weights through a slight modification of a feedback process known as backpropogation
+      - Works its way back, layer by layer, from network's final output, tweaking the weights of each unit or artificial neuron, according to the units calculated portion of the total output error
+      - Recurrent neural networks use a heavier version of this process knwon as backpropogation through time (BPTT) 
+      - BPTT extends the tweaking processing to include the weight of the T-1 input values responsible for each unit's memory of the prior moment
+    - 7. Vanishing Gradient Problem
+      - Initial success with gradient descent and BPTT, many ANNs, including 1st gen RNNs run out of gas
+      - Suffer from serious setback known as vanishing gradient problem
+      - Basic idea is the following:
+        - 1. Notion of a gradient - simpler relative, the derivative, you can think of a gradient as a slope
+        - 2. Larger the gradient, the steeper the slope, the more quickly the system can roll downhill to the finish line and complete its training
+        - 3. Slopes were too flat for fast training - particularly in the first layers of the deep networks, which are the most critical when it comes to proper tweaking of memory units.
+        - 4. They ge so small, that their corresponding slopes so flat, describe as "vanishing"
+        - 5. smaller and smaller, thus flatter and flatter, the training times grew unbearably long
+    - 8. Long Short-Term Memory
+      - 90s a major breakthrough solved the vanishing descent problem and gave a second wind to recurrent network development
+      - center of this new approach were units of long short-term memory (LSTM)
+      - these artificial neruons remember their inputs from a moment ago. However, unlike standard RNN units, LSTMs can hang on to their memories, which have read/write properties akin to memory registers in a conventional computer.
+      - LSTMs have analog, rather than digital, memory - making their functions differentiable
+      - In other words, curves are continuous and you canf ind the steepness of their slopes.
+      - good fit for partial differential calculus involved in backpropagation and gradient descent
+      - LSTMs can not only tweak their weights, but retain, delete, transform, and otherwise control the inflow and outflow of their stored data according to the quirks of their training.
+      - LSTMs can cling to important error information for long enough to keep gradients relatively steep and thus training periods relatively short
+      - The above wipes out the vanishing gradient problem and greatly improves the accuracy of today's LSTM-based recurrent networks
+    - 9. What to remember about RNNs
+      - Recurrent Neural Networks can remember their former inputs which gives them a big edge over other artificial neural networks when it comes to sequential, context-sensitive tasks such as speech recognition. 
+      - First generation RNN hit the wall when it came to their capacity to correct for errors through the all-important twin proceseses of backpropagation and gradient descent
+      - Vanishing Gradient Descent Problem - halted progress in the field until 1997 when LSTM-based architecture were introduced
+      - LSTM appraoch effective turned each unit in a recurrent network into an analogue computer greatly increased accuracy and helped lead to the renaissance in AI we're seeing all around us today.
+        
