@@ -47,3 +47,8 @@ from keras.layers import LSTM
 # Initialising the RNN
 # predicting a continuous outcome, regression model
 regressor = Sequential()
+
+# Adding the input layer and the LSTM layer
+regressor.add(LSTM(units = 4, activation = 'sigmoid', input_shape = (None, 1)))
+
+
