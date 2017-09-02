@@ -36,3 +36,14 @@ y_train = training_set[1:1258]
 # Keras Documentation - why reshape? - 3D tensor with shape (batch_size, timesteps)
 # time steps different between output and input time, input_dim dimension of input feature
 X_train = np.reshape(X_train, (1257, 1, 1))
+
+# Part 2 - Building the RNN
+
+# Importing the keras libs and packages
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+
+# Initialising the RNN
+# predicting a continuous outcome, regression model
+regressor = Sequential()
