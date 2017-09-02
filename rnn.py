@@ -58,3 +58,12 @@ regressor.add(Dense(units = 1))
 # use the mean square error
 # regression won't be binary cross entropy, MSE for regression
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
+
+# Fitting the RNN to the Trainign set
+regressor.fit(X_train, y_train, batch_size = 32, epochs = 200)
+
+# Part 3 - Making the predictions and visualising the results
+
+# Getting the real stock price of 2017
+test_set = pd.read_csv("Google_Stock_Price_Test.csv")
+real_stock_price = test_set.iloc[:,1:2].values
