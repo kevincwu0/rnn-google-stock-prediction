@@ -67,3 +67,19 @@ regressor.fit(X_train, y_train, batch_size = 32, epochs = 200)
 # Getting the real stock price of 2017
 test_set = pd.read_csv("Google_Stock_Price_Test.csv")
 real_stock_price = test_set.iloc[:,1:2].values
+
+# Getting the predicted stock price of 2017
+inputs = real_stock_price
+inputs = sc.transform(inputs)
+inputs = np.reshape(inputs, (20, 1, 1))
+predicted_stock_price = regressor.predict(inputs)
+predicted_stock_price = sc.inverse_transform(predicted_stock_price)
+
+# Visualising the results
+plt.plot(real_stock_price, color = 'red', label = 'Real Google Stock Price')
+plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted Google Stock Price')
+plt.title('Google Stock Price Prediction')
+plt.xlabel('Time')
+plt.ylabel('Google Time Price')
+plt.legend()
+plt.show()
