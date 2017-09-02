@@ -53,3 +53,8 @@ regressor.add(LSTM(units = 4, activation = 'sigmoid', input_shape = (None, 1)))
 
 # Adding the output layer
 regressor.add(Dense(units = 1))
+
+# Compiling the RNN
+# use the mean square error
+# regression won't be binary cross entropy, MSE for regression
+regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
