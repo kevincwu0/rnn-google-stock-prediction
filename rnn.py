@@ -30,3 +30,9 @@ training_set = sc.fit_transform(training_set)
 # Getting the inputs and the outputs, y_train is output, x_train is the input
 X_train = training_set[0:1257]
 y_train = training_set[1:1258]
+
+# Reshaping inputs, input has a certain format (2D array, features)
+# Changing the format of X_train into a 3D array, with a timestep
+# Keras Documentation - why reshape? - 3D tensor with shape (batch_size, timesteps)
+# time steps different between output and input time, input_dim dimension of input feature
+X_train = np.reshape(X_train, (1257, 1, 1))
