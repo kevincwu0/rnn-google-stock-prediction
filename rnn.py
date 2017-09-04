@@ -102,3 +102,10 @@ plt.ylabel('Google Time Price')
 plt.legend()
 plt.show()
 
+# Part 4 - Evaluating the RNN
+# Evaluate of the RNN - learning to evaluate regression models
+# Root Mean Square Error (RMSE)
+
+import math
+import sklearn.metrics import mean_squared_error
+rmse = math.sqrt(mean_squared_error(real_stock_price, predicted_stock_price))
